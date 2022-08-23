@@ -1,23 +1,36 @@
 <!-- Login Page -->
-<?php
-if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
-    header("location: index.php");
-    exit;
-}
+<?php include 'databaseConnection.php';
 // Handle login and create session
-$username = $password = "";
-
 session_start();
-if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(isset($_POST["username"]) && isset($_POST["password"])){
-        $username = $_POST["username"];
-        $password = $_POST["password"];
-        if($username == "admin" && $password == "admin"){
-            $_SESSION["loggedin"] = true;
-            $_SESSION["username"] = $username;
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    //Check if email and password exist in database
+    $sql = "SELECT * FROM users WHERE email = :email";
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':email', $email);
+    $email = $_POST['email'];
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    if ($result) {
+        //Check if password is correct
+        if (password_verify($_POST['password'], $result['password'])) {
+            //Create session
+            $_SESSION['loggedin'] = true;
+            $_SESSION['id'] = $result['id'];
+            $_SESSION['email'] = $result['email'];
+            $_SESSION['firstname'] = $result['firstname'];
+            $_SESSION['lastname'] = $result['lastname'];
+            $_SESSION['phonenumber'] = $result['phonenumber'];
+            $_SESSION['role'] = $result['role'];
             header("location: index.php");
-            exit;
+        } else {
+            echo '<div class="alert alert-danger" role="alert">
+            Incorrect password!
+            </div>';
         }
+    } else {
+        echo '<div class="alert alert-danger" role="alert">
+        User not registered!
+        </div>';
     }
 }
 ?>
@@ -44,12 +57,13 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
                 </div>
             </div>
         </nav>
+        <h1>Welcome Back</h1>
         <form action="<?php
                         echo htmlspecialchars($_SERVER["PHP_SELF"]);
                         ?>" method="post">
             <div class="form-group">
-                <label for="username">Username:</label>
-                <input type="text" class="form-control" id="username" name="username" placeholder="Enter username">
+                <label for="email">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
@@ -61,13 +75,4 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         <p> <a href="register.php">Register</a> </p>
     </div>
 </body>
-<!-- Footer with copyright info and year -->
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">Copyright &copy; <?php echo date("Y"); ?> - <?php echo date("Y") + 1; ?>
-            <a href="#">Project By Kenaan Akiiki</a>
-        </p>
-    </div>
-</footer>
-
 </html>

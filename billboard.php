@@ -27,13 +27,4 @@
         ?>
     </div>
 </body>
-<!-- Footer with copyright info and year -->
-<footer class="footer">
-    <div class="container">
-        <p class="text-muted">Copyright &copy; <?php echo date("Y"); ?> - <?php echo date("Y") + 1; ?>
-            <a href="#">Project By Kenaan Akiiki</a>
-        </p>
-    </div>
-</footer>
-
 </html>
