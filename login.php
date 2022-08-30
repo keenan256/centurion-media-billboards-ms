@@ -45,12 +45,53 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Add bootstrap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300&display=swap" rel="stylesheet">
+    <!-- Styles -->
+    <style>
+        body {
+            background-color: #198754;
+            font-family: 'Karla', sans-serif;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .container h1 {
+            text-align: center;
+        }
+
+        .container .form-group {
+            margin-bottom: 20px;
+        }
+
+        .container .form-control {
+            border-radius: 5px;
+        }
+
+        .container .btn {
+            border-radius: 5px;
+            background-color: #198754;
+            color: #fff;
+        }
+
+        .container .btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <!-- Navbar with title -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar bg-success">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="#">Centurion Billboard Management System</a>
@@ -63,11 +104,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         ?>" method="post">
             <div class="form-group">
                 <label for="email">Email:</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" required>
             </div>
             <div class="form-group">
                 <label for="password">Password:</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password">
+                <input type="password" class="form-control" id="password" name="password" placeholder="Enter password" required>
             </div>
             <button type="submit" class="btn btn-default">Submit</button>
         </form>
@@ -75,4 +116,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <p> <a href="register.php">Register</a> </p>
     </div>
 </body>
+
 </html>

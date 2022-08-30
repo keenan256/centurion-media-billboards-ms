@@ -80,13 +80,56 @@ $firstname = $stmt->fetchColumn();
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <!-- Add bootstrap -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Karla:wght@300&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #198754;
+            font-family: 'Karla', sans-serif;
+        }
+
+        .container {
+            margin: auto;
+            background-color: #fff;
+            border-radius: 5px;
+        }
+
+        .container h1 {
+            text-align: center;
+        }
+
+        .container .form-group {
+            margin-bottom: 20px;
+        }
+
+        .container .form-control {
+            border-radius: 5px;
+        }
+
+        .container .btn {
+            border-radius: 5px;
+            background-color: #198754;
+            color: #fff;
+        }
+
+        .container .btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .container .panel {
+            border-color: #198754;
+        }
+    </style>
 </head>
 
 <body>
     <div class="container">
         <h1>Centurion Media Billboard Management System</h1>
         <!-- Navigation bar with logo and links to home, register, login, and logout -->
-        <nav class="navbar navbar-default">
+        <nav class="navbar bg-success">
             <div class="container-fluid">
                 <!-- <div class="navbar-header">
                         <a class="navbar-brand" href="index.php">
@@ -95,10 +138,6 @@ $firstname = $stmt->fetchColumn();
                     </div> -->
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Home</a></li>
-                    <!-- Show if role is admin -->
-                    <?php if ($_SESSION['role'] == 'admin') { ?>
-                        <li><a href="#">Manage Users</a></li>
-                    <?php } ?>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li>
@@ -111,38 +150,38 @@ $firstname = $stmt->fetchColumn();
         <!-- Statictics for total number of billboards in cards view-->
         <div class="row">
             <div class="col-md-4">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">Total Number of Billboards</h3>
                     </div>
                     <div class="panel-body">
-                        <?php
-                        echo $totalbillboards;
-                        ?>
+                        <h4>
+                            <?php echo $totalbillboards ?>
+                        </h4>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">Total Number of Available Billboards</h3>
                     </div>
                     <div class="panel-body">
-                        <?php
-                        echo $totalactivebillboards;
-                        ?>
+                        <h4>
+                            <?php echo $totalactivebillboards ?>
+                        </h4>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="panel panel-primary">
+                <div class="panel panel-success">
                     <div class="panel-heading">
                         <h3 class="panel-title">Total Number of Clients</h3>
                     </div>
                     <div class="panel-body">
-                        <?php
-                        echo $totalclients;
-                        ?>
+                        <h4>
+                            <?php echo $totalclients ?>
+                        </h4>
                     </div>
                 </div>
             </div>
@@ -205,7 +244,7 @@ $firstname = $stmt->fetchColumn();
                                     ?>
                                 </td>
                                 <td>
-                                    <a href="edit.php?id=<?php echo $billboard['id']; ?>" class="btn btn-primary">View</a>
+                                    <a href="billboard.php?id=<?php echo $billboard['id']; ?>" class="btn btn-primary">View</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
