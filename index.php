@@ -231,16 +231,19 @@ $firstname = $stmt->fetchColumn();
                                 <!-- //Calculate days left until billboard expires -->
                                 <td>
                                     <?php
-                                    $startdate = strtotime($billboard['startdate']);
-                                    $enddate = strtotime($billboard['enddate']);
-                                    $daysleft = ($enddate - $startdate) / 86400;
-                                    //Highlight with red if less than 7 days left 
-                                    if ($daysleft < 7) {
-                                        echo '<span style="color:red;">' . $daysleft . '</span>';
+                                    //Check if billboard is active
+                                    if ($billboard['status'] == 'active') {
+                                        //Get current date
+                                        $currentdate = date('Y-m-d');
+                                        //Get end date
+                                        $enddate = $billboard['enddate'];
+                                        //Calculate days left
+                                        $daysleft = (strtotime($enddate) - strtotime($currentdate)) / (60 * 60 * 24);
+                                        //Display days left
+                                        echo $daysleft;
                                     } else {
-                                        echo '<span style="color:green;">' . $daysleft . '</span>';
+                                        echo 'N/A';
                                     }
-
                                     ?>
                                 </td>
                                 <td>
@@ -301,11 +304,11 @@ $firstname = $stmt->fetchColumn();
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" value="Submit">
                             </div>
+                        </form>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                     </div>
-
                 </div>
             </div>
         </div>

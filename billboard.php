@@ -33,6 +33,7 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
         body {
             background-color: #198754;
             font-family: 'Karla', sans-serif;
+            font-size: large;
         }
 
         .container {
@@ -79,13 +80,88 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
                 <h3 class="panel-title">Billboard at <?php echo $billboard['location']; ?></h3>
             </div>
             <div class="panel-body">
-                <p>
-                    <strong>Billboard Name:</strong> <?php echo $billboard['name']; ?><br>
-                    <strong>Billboard Location:</strong> <?php echo $billboard['location']; ?><br>
-                    <strong>Billboard Size:</strong> <?php echo $billboard['size']; ?><br>
-                </p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <!-- Buttons on the right side of the page to edit or delete the billboard -->
+                        <p><strong>Name:</strong> <?php echo $billboard['name']; ?></p>
+                        <p><strong>Location: </strong><?php echo $billboard['location'] ?? ""; ?></p>
+                        <p><strong>Size: </strong><?php echo $billboard['size'] ?? ""; ?></p>
+                        <p><strong>Price: UGX. </strong><?php echo $billboard['price'] ?? ""; ?></p>
+                        <p><strong>Status: </strong><?php echo $billboard['status'] ?? ""; ?></p>
+                        <p><strong>Client: </strong><?php echo $billboard['client'] ?? ""; ?></p>
+                        <!-- End Date -->
+                        <p><strong>End Date: </strong><?php echo $billboard['end_date'] ?? ""; ?></p>
+                        <!-- Days Left -->
+                        <p><strong>Days Left: </strong><?php
+                                                        //Check if billboard is active
+                                                        if ($billboard['status'] == 'active') {
+                                                            //Get current date
+                                                            $currentdate = date('Y-m-d');
+                                                            //Get end date
+                                                            $enddate = $billboard['enddate'];
+                                                            //Calculate days left
+                                                            $daysleft = (strtotime($enddate) - strtotime($currentdate)) / (60 * 60 * 24);
+                                                            //Display days left
+                                                            echo $daysleft;
+                                                        } else {
+                                                            echo 'N/A';
+                                                        }
+                                                        ?></p>
+                        <br>
+                        <br>
+                        <button type="button" class="btn edit" data-toggle="modal" data-target="#editBillboardModal">Edit Billboard</button>
+                        <a href="deleteBillboard.php?id=<?php echo $billboard['id']; ?>" class="btn btn-default">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal to edit billboard details  -->
+    <div class="modal fade" id="editBillboardModal" tabindex="-1" role="dialog" aria-labelledby="editBillboardLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editBillboardLabel">Edit Billboard</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="editBillboard.php?id=<?php echo $billboard['id']; ?>" method="post" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label for="location">Location</label>
+                            <input type="text" class="form-control" id="location" name="location" value="<?php echo $billboard['location'] ?? ""; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="size">Size</label>
+                            <input type="text" class="form-control" id="size" name="size" value="<?php echo $billboard['size'] ?? ""; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="price">Price</label>
+                            <input type="text" class="form-control" id="price" name="price" value="<?php echo $billboard['price'] ?? ""; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="status">Status</label>
+                            <select class="form-control" id="status" name="status">
+                                <option value="active" <?php if ($billboard['status'] == 'active') {
+                                                            echo 'selected';
+                                                        } ?>>Active</option>
+                                <option value="inactive" <?php if ($billboard['status'] == 'inactive') {
+                                                                echo 'selected';
+                                                            } ?>>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="enddate">End Date</label>
+                            <input type="date" class="form-control" id="enddate" name="enddate" value="<?php echo $billboard['enddate'] ?? ""; ?>">
+                        </div>
+                        <input type="hidden" name="id" value="<?php echo $billboard['id']; ?>">
+                        <button type="submit" class="btn btn-primary" name="update">Update</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </body>
+
 </html>
