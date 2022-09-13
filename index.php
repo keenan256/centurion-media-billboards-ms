@@ -18,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $location = $_POST['location'];
     $size = $_POST['size'];
-    $image = NULL;
     $status = $_POST['status'];
     //if empty client field, set to NULL
     if (empty($_POST['client'])) {
@@ -27,16 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $client = $_POST['client'];
     }
     $startdate = $_POST['startdate'];
+    $price = $_POST['price'];
     $enddate = $_POST['enddate'];
     $addedby = $_SESSION['id'];
-    $sql = "INSERT INTO billboards (name, location, size, image, status, client, startdate, enddate, addedby) VALUES (:name, :location, :size, :image, :status, :client, :startdate, :enddate, :addedby)";
+    $sql = "INSERT INTO billboards (name, location, size, status, price, client, startdate, enddate, addedby) VALUES (:name, :location, :size, :status, :price, :client, :startdate, :enddate, :addedby)";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':location', $location);
     $stmt->bindParam(':size', $size);
-    $stmt->bindParam(':image', $image);
     $stmt->bindParam(':status', $status);
     $stmt->bindParam(':client', $client);
+    $stmt->bindParam(':price', $price);
     $stmt->bindParam(':startdate', $startdate);
     $stmt->bindParam(':enddate', $enddate);
     $stmt->bindParam(':addedby', $addedby);
@@ -282,28 +282,36 @@ $firstname = $stmt->fetchColumn();
                                 <input type="text" name="size" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>Billboard Status</label>
-                                <select name="status" class="form-control" required>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
+                                <label for="price">Price</label>
+                                <!-- Add suffix for currency (e.g. $, £, €) -->
+                                <div class="input-group">
+                                    <span class="input-group-addon">UGX.</span>
+                                    <input type="number" name="price" class="form-control" required>
+                                </div>
                             </div>
-                            <div class="form-group">
-                                <label>Current Client</label>
-                                <!-- Make input disabled if inactive option is selected -->
-                                <input type="text" name="client" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>Start Date</label>
-                                <input type="date" name="startdate" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label>End Date</label>
-                                <input type="date" name="enddate" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" class="btn btn-primary" value="Submit">
-                            </div>
+                                <div class="form-group">
+                                    <label>Billboard Status</label>
+                                    <select name="status" class="form-control" required>
+                                        <option value="active">Active</option>
+                                        <option value="inactive">Inactive</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Current Client</label>
+                                    <!-- Make input disabled if inactive option is selected -->
+                                    <input type="text" name="client" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>Start Date</label>
+                                    <input type="date" name="startdate" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label>End Date</label>
+                                    <input type="date" name="enddate" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary" value="Submit">
+                                </div>
                         </form>
                     </div>
                     <div class="modal-footer">
