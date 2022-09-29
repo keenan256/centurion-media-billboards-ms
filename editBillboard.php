@@ -15,7 +15,6 @@ $stmt->execute();
 $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
 
 // Check if the form has been submitted
-if (isset($_POST['submit'])) {
     // Get the details from the form
     $name = $_POST['name'];
     $location = $_POST['location'];
@@ -25,6 +24,7 @@ if (isset($_POST['submit'])) {
     $client = $_POST['client'];
     $startdate = $_POST['startdate'];
     $enddate = $_POST['enddate'];
+
 
     // Update the billboard
     $sql = "UPDATE billboards SET name = :name, location = :location, size = :size, status = :status, price = :price, client = :client, startdate = :startdate, enddate = :enddate WHERE id = :id";
@@ -42,6 +42,5 @@ if (isset($_POST['submit'])) {
 
     // Redirect to the home page
     header("Location: index.php");
-}
 
 ?>

@@ -129,16 +129,23 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
                 <div class="modal-body">
                     <form action="editBillboard.php?id=<?php echo $billboard['id']; ?>" method="post" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label for="location">Location</label>
+                            <label>Billboard Name</label>
+                            <input type="text" name="name" class="form-control" id="name" value="<?php echo $billboard['name'] ?? "" ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Billboard Location</label>
                             <input type="text" class="form-control" id="location" name="location" value="<?php echo $billboard['location'] ?? ""; ?>">
                         </div>
                         <div class="form-group">
-                            <label for="size">Size</label>
+                            <label for="size">Billboard Size</label>
                             <input type="text" class="form-control" id="size" name="size" value="<?php echo $billboard['size'] ?? ""; ?>">
                         </div>
                         <div class="form-group">
                             <label for="price">Price</label>
-                            <input type="text" class="form-control" id="price" name="price" value="<?php echo $billboard['price'] ?? ""; ?>">
+                            <div class="input-group">
+                                <span class="input-group-addon">UGX.</span>
+                                <input type="number" name="price" class="form-control" id="price" value="<?php echo $billboard['price'] ?? ""; ?>">
+                            </div>
                         </div>
                         <div class="form-group">
                             <label for="status">Status</label>
@@ -150,6 +157,15 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
                                                                 echo 'selected';
                                                             } ?>>Inactive</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Current Client</label>
+                            <!-- Make input disabled if inactive option is selected -->
+                            <input type="text" name="client" class="form-control" id="client" value="<?php echo $billboard['client'] ?? ""; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label>Start Date</label>
+                            <input type="date" name="startdate" id="startdate" class="form-control" value="<?php echo $billboard['startdate'] ?? ""; ?>">
                         </div>
                         <div class="form-group">
                             <label for="enddate">End Date</label>
