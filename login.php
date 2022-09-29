@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <nav class="navbar bg-success">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#">Centurion Billboard Management System</a>
+                    <a class="navbar-brand" href="/">Centurion Billboard Management System</a>
                 </div>
             </div>
         </nav>
