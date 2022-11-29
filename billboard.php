@@ -81,8 +81,12 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
             </div>
             <div class="panel-body">
                 <div class="row">
-                    <div class="col-md-6">
-                        <!-- Buttons on the right side of the page to edit or delete the billboard -->
+                    <div class="col-md-8">
+                        <?php if ($billboard['picture'] != null) { ?>
+                            <img src="uploads/<?php echo $billboard['picture']; ?>" class="img-responsive" alt="Billboard Picture">
+                        <?php } else { 
+                            echo "No picture available";
+                        } ?>
                         <p><strong>Name:</strong> <?php echo $billboard['name']; ?></p>
                         <p><strong>Location: </strong><?php echo $billboard['location'] ?? ""; ?></p>
                         <p><strong>Size: </strong><?php echo $billboard['size'] ?? ""; ?></p>
@@ -90,7 +94,7 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
                         <p><strong>Status: </strong><?php echo $billboard['status'] ?? ""; ?></p>
                         <p><strong>Client: </strong><?php echo $billboard['client'] ?? ""; ?></p>
                         <!-- End Date -->
-                        <p><strong>End Date: </strong><?php echo $billboard['end_date'] ?? ""; ?></p>
+                        <p><strong>End Date: </strong><?php echo $billboard['enddate'] ?? ""; ?></p>
                         <!-- Days Left -->
                         <p><strong>Days Left: </strong><?php
                                                         //Check if billboard is active

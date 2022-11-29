@@ -131,11 +131,11 @@ $firstname = $stmt->fetchColumn();
         <!-- Navigation bar with logo and links to home, register, login, and logout -->
         <nav class="navbar bg-success">
             <div class="container-fluid">
-                <!-- <div class="navbar-header">
-                        <a class="navbar-brand" href="index.php">
-                            <img alt="Brand" src="images/logo.png" width="30" height="30">
-                        </a>
-                    </div> -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.php">
+                        <img alt="Brand" src="images/logo.png" width="30" height="30">
+                    </a>
+                </div>
                 <ul class="nav navbar-nav">
                     <li><a href="index.php">Home</a></li>
                 </ul>
@@ -146,176 +146,84 @@ $firstname = $stmt->fetchColumn();
                     </li>
                 </ul>
             </div>
+            <form class="navbar-form navbar-right" action="search.php" method="POST">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search Billboard" name="search">
+                    <!-- Small submit button -->
+                    <button type="submit" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-search"></span>
+                    </button>
+                </div>
+            </form>
         </nav>
-        <!-- Statictics for total number of billboards in cards view-->
+        <!-- Three clickable Widgets to show total number of billboards, total number of active billboards, and total number of clients -->
         <div class="row">
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Total Number of Billboards</h3>
-                    </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <h4>
-                            <?php echo $totalbillboards ?>
-                        </h4>
+                        <h3>Dashboard Overview</h3>
+                    </div>
+                    <!-- //Forward Icon -->
+                    <div class="panel-footer">
+                        <a href="overview.php">
+                            <span class="glyphicon glyphicon-forward"></span>
+                            <span>See Overview</span>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Total Number of Available Billboards</h3>
-                    </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <h4>
-                            <?php echo $totalactivebillboards ?>
-                        </h4>
+                        <h3>All Billboards</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="billboards.php">
+                            <span class="glyphicon glyphicon-forward"></span>
+                            <span>View Billboards</span>
+                        </a>
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="panel panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Total Number of Clients</h3>
-                    </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
                     <div class="panel-body">
-                        <h4>
-                            <?php echo $totalclients ?>
-                        </h4>
+                        <h3>Available Billboards</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="availableBillboards.php">
+                            <span class="glyphicon glyphicon-forward"></span>
+                            <span>View Billboards</span>
+                        </a>
                     </div>
                 </div>
             </div>
-            <!-- Statictics for total number of billboards in cards view-->
         </div>
-        <!-- Button to open modal for new billboard -->
-        <div class="col">
-            <div class="mb-1">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-                    Add New Billboard
-                </button>
-            </div>
-            <div>
-                <table class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Billboard Name</th>
-                            <th>Billboard Location</th>
-                            <th>Billboard Size</th>
-                            <th>Billboard Status</th>
-                            <th>Curent Client</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>Days Left</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($billboards as $billboard) : ?>
-                            <tr>
-                                <td><?php echo $billboard['id']; ?></td>
-                                <td><?php echo $billboard['name']; ?></td>
-                                <td><?php echo $billboard['location']; ?></td>
-                                <td><?php echo $billboard['size']; ?></td>
-                                <td><?php
-                                    //If status is active, display green checkmark, else display red cross
-                                    if ($billboard['status'] == 'active') {
-                                        echo '<span class="glyphicon glyphicon-ok" style="color:green;"></span>';
-                                    } else {
-                                        echo '<span class="glyphicon glyphicon-remove" style="color:red;"></span>';
-                                    }
-                                    ?></td>
-                                <td><?php echo $billboard['client']; ?></td>
-                                <td><?php echo $billboard['startdate']; ?></td>
-                                <td><?php echo $billboard['enddate']; ?></td>
-                                <!-- //Calculate days left until billboard expires -->
-                                <td>
-                                    <?php
-                                    //Check if billboard is active
-                                    if ($billboard['status'] == 'active') {
-                                        //Get current date
-                                        $currentdate = date('Y-m-d');
-                                        //Get end date
-                                        $enddate = $billboard['enddate'];
-                                        //Calculate days left
-                                        $daysleft = (strtotime($enddate) - strtotime($currentdate)) / (60 * 60 * 24);
-                                        //Display days left
-                                        echo $daysleft;
-                                    } else {
-                                        echo 'N/A';
-                                    }
-                                    ?>
-                                </td>
-                                <td>
-                                    <a href="billboard.php?id=<?php echo $billboard['id']; ?>" class="btn btn-primary">View</a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
 
-        </div>
-        <!-- Add new billboard form in a modal -->
-        <div class="modal fade" id="addModal" role="dialog">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                        <h4 class="modal-title">Add New Billboard</h4>
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Rented Billboards</h3>
                     </div>
-                    <div class="modal-body">
-                        <!-- Form to post new billboard -->
-                        <form action="<?php
-                                        echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                                        ?>" method="post">
-                            <div class="form-group">
-                                <label>Billboard Name</label>
-                                <input type="text" name="name" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Billboard Location</label>
-                                <input type="text" name="location" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label>Billboard Size</label>
-                                <input type="text" name="size" class="form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="price">Price</label>
-                                <!-- Add suffix for currency (e.g. $, £, €) -->
-                                <div class="input-group">
-                                    <span class="input-group-addon">UGX.</span>
-                                    <input type="number" name="price" class="form-control" required>
-                                </div>
-                            </div>
-                                <div class="form-group">
-                                    <label>Billboard Status</label>
-                                    <select name="status" class="form-control" required>
-                                        <option value="active">Active</option>
-                                        <option value="inactive">Inactive</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label>Current Client</label>
-                                    <!-- Make input disabled if inactive option is selected -->
-                                    <input type="text" name="client" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>Start Date</label>
-                                    <input type="date" name="startdate" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <label>End Date</label>
-                                    <input type="date" name="enddate" class="form-control">
-                                </div>
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-primary" value="Submit">
-                                </div>
-                        </form>
+                    <div class="panel-footer">
+                        <a href="rentedBillboards.php">
+                            <span class="glyphicon glyphicon-forward"></span>
+                            <span>View Billboards</span>
+                        </a>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Expired Rental Contracts</h3>
+                    </div>
+                    <div class="panel-footer">
+                        <a href="expiredRentalContracts.php">
+                            <span class="glyphicon glyphicon-forward"></span>
+                            <span>View All</span>
+                        </a>
                     </div>
                 </div>
             </div>

@@ -28,6 +28,7 @@ try {
     status TEXT CHECK(status IN ('active', 'inactive')) NOT NULL DEFAULT 'active',
     price INTEGER,
     client TEXT,
+    picture TEXT,
     startdate DATE,
     enddate DATE,
     addedby INTEGER,
