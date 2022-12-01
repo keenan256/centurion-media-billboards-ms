@@ -103,7 +103,7 @@ $firstname = $stmt->fetchColumn();
                     </li>
                 </ul>
             </div>
-            <form class="navbar-form navbar-right" action="search.php" method="GET">
+            <form class="navbar-form navbar-right" action="search.php" method="POST">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search Billboard" name="search">
                     <!-- Small submit button -->

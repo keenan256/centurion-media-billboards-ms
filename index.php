@@ -13,37 +13,6 @@ $stmt = $db->prepare($sql);
 $stmt->execute();
 $billboards = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-//Script to post new billboard form data to database
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST['name'];
-    $location = $_POST['location'];
-    $size = $_POST['size'];
-    $status = $_POST['status'];
-    //if empty client field, set to NULL
-    if (empty($_POST['client'])) {
-        $client = NULL;
-    } else {
-        $client = $_POST['client'];
-    }
-    $startdate = $_POST['startdate'];
-    $price = $_POST['price'];
-    $enddate = $_POST['enddate'];
-    $addedby = $_SESSION['id'];
-    $sql = "INSERT INTO billboards (name, location, size, status, price, client, startdate, enddate, addedby) VALUES (:name, :location, :size, :status, :price, :client, :startdate, :enddate, :addedby)";
-    $stmt = $db->prepare($sql);
-    $stmt->bindParam(':name', $name);
-    $stmt->bindParam(':location', $location);
-    $stmt->bindParam(':size', $size);
-    $stmt->bindParam(':status', $status);
-    $stmt->bindParam(':client', $client);
-    $stmt->bindParam(':price', $price);
-    $stmt->bindParam(':startdate', $startdate);
-    $stmt->bindParam(':enddate', $enddate);
-    $stmt->bindParam(':addedby', $addedby);
-    $stmt->execute();
-    header("Location: index.php");
-}
-
 //Get total number of billboards
 $sql = "SELECT COUNT(*) FROM billboards";
 $stmt = $db->prepare($sql);

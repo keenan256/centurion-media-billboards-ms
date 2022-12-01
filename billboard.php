@@ -82,11 +82,7 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
             <div class="panel-body">
                 <div class="row">
                     <div class="col-md-8">
-                        <?php if ($billboard['picture'] != null) { ?>
-                            <img src="uploads/<?php echo $billboard['picture']; ?>" class="img-responsive" alt="Billboard Picture">
-                        <?php } else { 
-                            echo "No picture available";
-                        } ?>
+                        <img src="uploads/<?php echo $billboard['picture']; ?>" class="img-responsive" alt="Billboard Picture">
                         <p><strong>Name:</strong> <?php echo $billboard['name']; ?></p>
                         <p><strong>Location: </strong><?php echo $billboard['location'] ?? ""; ?></p>
                         <p><strong>Size: </strong><?php echo $billboard['size'] ?? ""; ?></p>
@@ -174,6 +170,10 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
                         <div class="form-group">
                             <label for="enddate">End Date</label>
                             <input type="date" class="form-control" id="enddate" name="enddate" value="<?php echo $billboard['enddate'] ?? ""; ?>">
+                        </div>
+                        <div class="form-group">
+                            <label for="picture">Picture</label>
+                            <input type="file" name="picture" class="form-control">
                         </div>
                         <input type="hidden" name="id" value="<?php echo $billboard['id']; ?>">
                         <button type="submit" class="btn btn-primary" name="update">Update</button>

@@ -1,4 +1,3 @@
-<!-- Billboard management system -->
 <!-- Include Database Connection Script -->
 <?php include 'databaseConnection.php';
 //Check if user has session
@@ -19,7 +18,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $location = $_POST['location'];
     $size = $_POST['size'];
     $status = $_POST['status'];
-    //if empty client field, set to NULL
     if (empty($_POST['client'])) {
         $client = NULL;
     } else {
@@ -28,9 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $startdate = $_POST['startdate'];
     $price = $_POST['price'];
     $enddate = $_POST['enddate'];
+    $picture = $_FILES['picture'];
     $addedby = $_SESSION['id'];
-    $picture = $_POST['picture'];
-    $sql = "INSERT INTO billboards (name, location, size, status, price, client, startdate, enddate, addedby, picture) VALUES (:name, :location, :size, :status, :price, :client, :startdate, :enddate, :addedby, :picture)";
+    $sql = "INSERT INTO billboards (name, location, size, status, client, startdate, price, enddate, picture, addedby) VALUES (:name, :location, :size, :status, :client, :startdate, :price, :enddate, :picture, :addedby)";
     $stmt = $db->prepare($sql);
     $stmt->bindParam(':name', $name);
     $stmt->bindParam(':location', $location);
@@ -40,20 +38,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':price', $price);
     $stmt->bindParam(':startdate', $startdate);
     $stmt->bindParam(':enddate', $enddate);
+    $stmt->bindParam(':picture', $picture['name']);
     $stmt->bindParam(':addedby', $addedby);
-    $stmt->bindParam(':picture', $picture);
     $stmt->execute();
 
     $target_dir = "uploads/";
     $target_file = $target_dir . basename($_FILES["picture"]["name"]);
 
     if (move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["picture"]["name"]). " has been uploaded.";
+        echo "The file " . basename($_FILES["picture"]["name"]) . " has been uploaded.";
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
 
-    
+
     header("Location: overview.php");
 }
 
@@ -160,7 +158,7 @@ $firstname = $stmt->fetchColumn();
                     </li>
                 </ul>
             </div>
-            <form class="navbar-form navbar-right" action="search.php" method="GET">
+            <form class="navbar-form navbar-right" action="search.php" method="POST">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search Billboard" name="search">
                     <!-- Small submit button -->
@@ -291,8 +289,7 @@ $firstname = $stmt->fetchColumn();
                         <!-- Form to post new billboard -->
                         <form action="<?php
                                         echo htmlspecialchars($_SERVER["PHP_SELF"]);
-                                        ?>" method="post"
-                                        enctype="multipart/form-data">
+                                        ?>" method="post" enctype="multipart/form-data">
                             <div class="form-group">
                                 <label>Billboard Name</label>
                                 <input type="text" name="name" class="form-control" required>
@@ -336,7 +333,7 @@ $firstname = $stmt->fetchColumn();
                             <!-- Picture upload -->
                             <div class="form-group">
                                 <label>Upload Picture</label>
-                                <input type="file" name="picture" class="form-control"> 
+                                <input type="file" name="picture" required>
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" value="Submit">
