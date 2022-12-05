@@ -37,7 +37,7 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
         }
 
         .container {
-            margin: auto;
+            margin: auto;       
             background-color: #fff;
             border-radius: 5px;
         }
