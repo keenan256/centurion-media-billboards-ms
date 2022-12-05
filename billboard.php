@@ -40,6 +40,7 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
             margin: auto;
             background-color: #fff;
             border-radius: 5px;
+            width: 100%;
         }
 
         .container h1 {
@@ -75,6 +76,12 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="container">
         <h1>Billboard Details</h1>
 
+        <!-- //Bread crumbs to navigate to billboard details -->
+        <ol class="breadcrumb">
+            <li><a href="index.php">Home</a></li>
+            <li><a href="billboards.php">Billboards</a></li>
+            <li class="active">Billboard Details</li>
+        </ol>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Billboard at <?php echo $billboard['location']; ?></h3>
