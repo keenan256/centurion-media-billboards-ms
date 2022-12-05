@@ -42,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->bindParam(':addedby', $addedby);
     $stmt->execute();
 
-    $target_dir = "uploads/";
+    $target_dir = "./uploads/";
     $target_file = $target_dir . basename($_FILES["picture"]["name"]);
 
     if (move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file)) {

@@ -38,7 +38,7 @@ $billboard = $stmt->fetch(PDO::FETCH_ASSOC);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
 
-    $target_dir = "uploads/";
+    $target_dir = "./uploads/";
     $target_file = $target_dir . basename($_FILES["picture"]["name"]);
 
     if (move_uploaded_file($_FILES["picture"]["tmp_name"], $target_file)) {
