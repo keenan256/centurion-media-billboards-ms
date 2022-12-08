@@ -139,7 +139,7 @@ $firstname = $stmt->fetchColumn();
 
 <body>
     <div class="container">
-        <h1>Dashboards Overview</h1>
+        <h1>Overview</h1>
         <!-- Navigation bar with logo and links to home, register, login, and logout -->
         <nav class="navbar bg-success">
             <div class="container-fluid">
