@@ -132,7 +132,20 @@ $firstname = $stmt->fetchColumn();
         }
 
         .container .panel {
+            border-color: #3b59db;
+            border-width: 2px;            
+        }
+
+        /* Nav border color to red */
+        .navbar {
+            border-color: #f54269;
+            border-width: 3px;
+        }
+
+        /* Table border color to green */
+        .table {
             border-color: #198754;
+            border-width: 2px;
         }
     </style>
 </head>
@@ -333,7 +346,7 @@ $firstname = $stmt->fetchColumn();
                             <!-- Picture upload -->
                             <div class="form-group">
                                 <label>Upload Picture</label>
-                                <input type="file" name="picture" required>
+                                <input type="file" name="picture">
                             </div>
                             <div class="form-group">
                                 <input type="submit" class="btn btn-primary" value="Submit">

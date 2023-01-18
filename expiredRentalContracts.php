@@ -79,6 +79,12 @@ $firstname = $stmt->fetchColumn();
         .container .panel {
             border-color: #198754;
         }
+
+        /* Nav border color to red */
+        .navbar {
+            border-color: #f54269;
+            border-width: 7px;
+        }
     </style>
 </head>
 

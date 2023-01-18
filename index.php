@@ -89,7 +89,14 @@ $firstname = $stmt->fetchColumn();
         }
 
         .container .panel {
-            border-color: #198754;
+            border-color: #3b59db;
+            border-width: 2px;
+        }
+
+        /* Nav border color to red */
+        .navbar {
+            border-color: #f54269;
+            border-width: 3px;
         }
     </style>
 </head>
@@ -98,7 +105,7 @@ $firstname = $stmt->fetchColumn();
     <div class="container">
         <h1>Centurion Media Billboard Management System</h1>
         <!-- Navigation bar with logo and links to home, register, login, and logout -->
-        <nav class="navbar bg-success">
+        <nav class="navbar bg-success ">
             <div class="container-fluid">
                 <div class="navbar-header">
                     <a class="navbar-brand" href="index.php">
